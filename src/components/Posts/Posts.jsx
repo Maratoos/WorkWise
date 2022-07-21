@@ -1,25 +1,22 @@
 import React from 'react'
-import usPic from '@/assets/images/resources/us-pic.png'
 import clock from '@/assets/images/clock.png'
 import icon8 from '@/assets/images/icon8.png'
 import icon9 from '@/assets/images/icon9.png'
 import likedImg from '@/assets/images/liked-img.png'
-import usPic2 from '@/assets/images/resources/us-pc2.png'
-import bgImg1 from '@/assets/images/resources/bg-img1.png'
-import bgImg2 from '@/assets/images/resources/bg-img2.png'
-import bgImg3 from '@/assets/images/resources/bg-img3.png'
-import bgImg4 from '@/assets/images/resources/bg-img4.png'
+import { getCollection } from '../../hooks/getCollection'
 
 export const Posts = () => {
+  const { documents:posts, error } = getCollection('posts')
   return (
   <div className="posts-section">
-    <div className="post-bar">
+    {posts.length > 0 && posts.map((post) => (
+    <div className="post-bar"  key={post.id}>
       <div className="post_topbar">
         <div className="usy-dt">
-          <img src={usPic} alt="" />
+          <img src={post.author.photoURL} alt="" width={50} height={50} style={{objectFit: "cover"}}/>
           <div className="usy-name">
-            <h3>John Doe</h3>
-            <span><img src={clock} alt="" />3 min ago</span>
+            <h3>{post.author.name}</h3>
+            <span><img src={clock} alt="" />{post.createdAt.toDate().toDateString()}</span>
           </div>
         </div>
         <div className="ed-opts">
@@ -35,8 +32,8 @@ export const Posts = () => {
       </div>
       <div className="epi-sec">
         <ul className="descp">
-          <li><img src={icon8} alt="" /><span>Epic Coder</span></li>
-          <li><img src={icon9} alt="" /><span>India</span></li>
+          <li><img src={icon8} alt="" /><span>{post.role}</span></li>
+          <li><img src={icon9} alt="" /><span>{post.location}</span></li>
         </ul>
         <ul className="bk-links">
           <li><a href="#" title=""><i className="la la-bookmark"></i></a></li>
@@ -44,291 +41,33 @@ export const Posts = () => {
         </ul>
       </div>
       <div className="job_descp">
-        <h3>Senior Wordpress Developer</h3>
+        <h3>{post.title}</h3>
         <ul className="job-dt">
-          <li><a href="#" title="">Full Time</a></li>
-          <li><span>$30 / hr</span></li>
+          <li><a href="#" title="">{post.jobType}</a></li>
+          <li><span>${post.rate} / hr</span></li>
         </ul>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" title="">view more</a></p>
+        <p>{post.description}... <a href="#" title="">view more</a></p>
         <ul className="skill-tags">
-          <li><a href="#" title="">HTML</a></li>
-          <li><a href="#" title="">PHP</a></li>
-          <li><a href="#" title="">CSS</a></li>
-          <li><a href="#" title="">Javascript</a></li>
-          <li><a href="#" title="">Wordpress</a></li> 	
+          {post.tags.map((tag) => (
+            <li key={tag}>
+              <a href="#" title="">{tag}</a>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="job-status-bar">
         <ul className="like-com">
           <li>
-            <a href="#"><i className="fas fa-heart"></i> Like</a>
+            <a href="#"><i className="fa fa-heart"></i> Like</a>
             <img src={likedImg} alt="" />
-            <span>25</span>
+            <span>{post.likes.length}</span>
           </li> 
-          <li><a href="#" className="com"><i className="fas fa-comment-alt"></i> Comment 15</a></li>
+          <li><a href="#" className="com"><i className="fa fa-comment"></i> Comment {post.comments.length}</a></li>
         </ul>
-        <a href="#"><i className="fas fa-eye"></i>Views 50</a>
+        <a href="#"><i className="fa fa-eye"></i>Views {post.views}</a>
       </div>
-    </div>
-    {/* <div className="top-profiles">
-      <div className="pf-hd">
-        <h3>Top Profiles</h3>
-        <i className="la la-ellipsis-v"></i>
-      </div>
-      <div className="profiles-slider">
-        <div className="user-profy">
-          <img src="images/resources/user1.png" alt="" />
-          <h3>John Doe</h3>
-          <span>Graphic Designer</span>
-          <ul>
-            <li><a href="#" title="" className="followw">Follow</a></li>
-            <li><a href="#" title="" className="envlp"><img src="images/envelop.png" alt="" /></a></li>
-            <li><a href="#" title="" className="hire">hire</a></li>
-          </ul>
-          <a href="#" title="">View Profile</a>
-        </div>
-        <div className="user-profy">
-          <img src="images/resources/user2.png" alt="" />
-          <h3>John Doe</h3>
-          <span>Graphic Designer</span>
-          <ul>
-            <li><a href="#" title="" className="followw">Follow</a></li>
-            <li><a href="#" title="" className="envlp"><img src="images/envelop.png" alt="" /></a></li>
-            <li><a href="#" title="" className="hire">hire</a></li>
-          </ul>
-          <a href="#" title="">View Profile</a>
-        </div>
-        <div className="user-profy">
-          <img src="images/resources/user3.png" alt="" />
-          <h3>John Doe</h3>
-          <span>Graphic Designer</span>
-          <ul>
-            <li><a href="#" title="" className="followw">Follow</a></li>
-            <li><a href="#" title="" className="envlp"><img src="images/envelop.png" alt="" /></a></li>
-            <li><a href="#" title="" className="hire">hire</a></li>
-          </ul>
-          <a href="#" title="">View Profile</a>
-        </div>
-        <div className="user-profy">
-          <img src="images/resources/user1.png" alt="" />
-          <h3>John Doe</h3>
-          <span>Graphic Designer</span>
-          <ul>
-            <li><a href="#" title="" className="followw">Follow</a></li>
-            <li><a href="#" title="" className="envlp"><img src="images/envelop.png" alt="" /></a></li>
-            <li><a href="#" title="" className="hire">hire</a></li>
-          </ul>
-          <a href="#" title="">View Profile</a>
-        </div>
-        <div className="user-profy">
-          <img src="images/resources/user2.png" alt="" />
-          <h3>John Doe</h3>
-          <span>Graphic Designer</span>
-          <ul>
-            <li><a href="#" title="" className="followw">Follow</a></li>
-            <li><a href="#" title="" className="envlp"><img src="images/envelop.png" alt="" /></a></li>
-            <li><a href="#" title="" className="hire">hire</a></li>
-          </ul>
-          <a href="#" title="">View Profile</a>
-        </div>
-        <div className="user-profy">
-          <img src="images/resources/user3.png" alt="" />
-          <h3>John Doe</h3>
-          <span>Graphic Designer</span>
-          <ul>
-            <li><a href="#" title="" className="followw">Follow</a></li>
-            <li><a href="#" title="" className="envlp"><img src="images/envelop.png" alt="" /></a></li>
-            <li><a href="#" title="" className="hire">hire</a></li>
-          </ul>
-          <a href="#" title="">View Profile</a>
-        </div>
-      </div>
-    </div> */}
-    <div className="post-bar">
-      <div className="post_topbar">
-        <div className="usy-dt">
-          <img src={usPic} alt="" />
-          <div className="usy-name">
-            <h3>John Doe</h3>
-            <span><img src={clock} alt="" />3 min ago</span>
-          </div>
-        </div>
-        <div className="ed-opts">
-          <a href="#" title="" className="ed-opts-open"><i className="la la-ellipsis-v"></i></a>
-          <ul className="ed-options">
-            <li><a href="#" title="">Edit Post</a></li>
-            <li><a href="#" title="">Unsaved</a></li>
-            <li><a href="#" title="">Unbid</a></li>
-            <li><a href="#" title="">Close</a></li>
-            <li><a href="#" title="">Hide</a></li>
-          </ul>
-        </div>
-      </div>
-      <div className="epi-sec">
-        <ul className="descp">
-          <li><img src={icon8} alt="" /><span>Epic Coder</span></li>
-          <li><img src={icon9} alt="" /><span>India</span></li>
-        </ul>
-        <ul className="bk-links">
-          <li><a href="#" title=""><i className="la la-bookmark"></i></a></li>
-          <li><a href="#" title=""><i className="la la-envelope"></i></a></li>
-          <li><a href="#" title="" className="bid_now">Bid Now</a></li>
-        </ul>
-      </div>
-      <div className="job_descp">
-        <h3>Senior Wordpress Developer</h3>
-        <ul className="job-dt">
-          <li><a href="#" title="">Full Time</a></li>
-          <li><span>$30 / hr</span></li>
-        </ul>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" title="">view more</a></p>
-        <ul className="skill-tags">
-          <li><a href="#" title="">HTML</a></li>
-          <li><a href="#" title="">PHP</a></li>
-          <li><a href="#" title="">CSS</a></li>
-          <li><a href="#" title="">Javascript</a></li>
-          <li><a href="#" title="">Wordpress</a></li> 	
-        </ul>
-      </div>
-      <div className="job-status-bar">
-        <ul className="like-com">
-          <li>
-            <a href="#"><i className="fas fa-heart"></i> Like</a>
-            <img src={likedImg} alt="" />
-            <span>25</span>
-          </li> 
-          <li><a href="#" className="com"><i className="fas fa-comment-alt"></i> Comment 15</a></li>
-        </ul>
-        <a href="#"><i className="fas fa-eye"></i>Views 50</a>
-      </div>
-    </div>
-    <div className="posty">
-      <div className="post-bar no-margin">
-        <div className="post_topbar">
-          <div className="usy-dt">
-            <img src={usPic2} alt="" />
-            <div className="usy-name">
-              <h3>John Doe</h3>
-              <span><img src={clock} alt="" />3 min ago</span>
-            </div>
-          </div>
-          <div className="ed-opts">
-            <a href="#" title="" className="ed-opts-open"><i className="la la-ellipsis-v"></i></a>
-            <ul className="ed-options">
-              <li><a href="#" title="">Edit Post</a></li>
-              <li><a href="#" title="">Unsaved</a></li>
-              <li><a href="#" title="">Unbid</a></li>
-              <li><a href="#" title="">Close</a></li>
-              <li><a href="#" title="">Hide</a></li>
-            </ul>
-          </div>
-        </div>
-        <div className="epi-sec">
-          <ul className="descp">
-            <li><img src={icon8} alt="" /><span>Epic Coder</span></li>
-            <li><img src={icon9} alt="" /><span>India</span></li>
-          </ul>
-          <ul className="bk-links">
-            <li><a href="#" title=""><i className="la la-bookmark"></i></a></li>
-            <li><a href="#" title=""><i className="la la-envelope"></i></a></li>
-          </ul>
-        </div>
-        <div className="job_descp">
-          <h3>Senior Wordpress Developer</h3>
-          <ul className="job-dt">
-            <li><a href="#" title="">Full Time</a></li>
-            <li><span>$30 / hr</span></li>
-          </ul>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" title="">view more</a></p>
-          <ul className="skill-tags">
-            <li><a href="#" title="">HTML</a></li>
-            <li><a href="#" title="">PHP</a></li>
-            <li><a href="#" title="">CSS</a></li>
-            <li><a href="#" title="">Javascript</a></li>
-            <li><a href="#" title="">Wordpress</a></li> 	
-          </ul>
-        </div>
-        <div className="job-status-bar">
-          <ul className="like-com">
-            <li>
-              <a href="#"><i className="fas fa-heart"></i> Like</a>
-              <img src={likedImg} alt="" />
-              <span>25</span>
-            </li> 
-            <li><a href="#" className="com"><i className="fas fa-comment-alt"></i> Comment 15</a></li>
-          </ul>
-          <a href="#"><i className="fas fa-eye"></i>Views 50</a>
-        </div>
-      </div>
-      <div className="comment-section">
-        <a href="#" className="plus-ic">
-          <i className="la la-plus"></i>
-        </a>
-        <div className="comment-sec">
-          <ul>
-            <li>
-              <div className="comment-list">
-                <div className="bg-img">
-                  <img src={bgImg1} alt="" />
-                </div>
-                <div className="comment">
-                  <h3>John Doe</h3>
-                  <span><img src="images/clock.png" alt="" /> 3 min ago</span>
-                  <p>Lorem ipsum dolor sit amet, </p>
-                  <a href="#" title="" className="active"><i className="fa fa-reply-all"></i>Reply</a>
-                </div>
-              </div>
-              <ul>
-                <li>
-                  <div className="comment-list">
-                    <div className="bg-img">
-                      <img src={bgImg2} alt="" />
-                    </div>
-                    <div className="comment">
-                      <h3>John Doe</h3>
-                      <span><img src={clock} alt="" /> 3 min ago</span>
-                      <p>Hi John </p>
-                      <a href="#" title=""><i className="fa fa-reply-all"></i>Reply</a>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <div className="comment-list">
-                <div className="bg-img">
-                  <img src={bgImg3} alt="" />
-                </div>
-                <div className="comment">
-                  <h3>John Doe</h3>
-                  <span><img src={clock} alt="" /> 3 min ago</span>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at.</p>
-                  <a href="#" title=""><i className="fa fa-reply-all"></i>Reply</a>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div className="post-comment">
-          <div className="cm_img">
-            <img src={bgImg4} alt="" />
-          </div>
-          <div className="comment_box">
-            <form>
-              <input type="text" placeholder="Post a comment" />
-              <button type="submit">Send</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div className="process-comm">
-      <div className="spinner">
-        <div className="bounce1"></div>
-        <div className="bounce2"></div>
-        <div className="bounce3"></div>
-      </div>
-    </div>
+    </div>      
+    ))}
 </div>
   )
 }
