@@ -17,7 +17,7 @@ const styles = {
 export const CreateJobPopup = () => {
     const [job, setJob] = useState({
         title: "", 
-        role: "Ебень", 
+        role: "Разработчик", 
         tags: [], 
         rate: "", 
         jobType: "", 
@@ -30,9 +30,10 @@ export const CreateJobPopup = () => {
         setJob(prev => ({...prev, [event.target.name]: event.target.value}))
     }
 
-    const handleChangeSkills = (event) => {
-        if(event.key === "ctrl") {
+    const handleChangeTag = (event) => {
+        if(event.key === " ") {
         if(job.tags.includes(event.target.value)) return setTempSkill("")
+        if(job.tags.length > 10) return setTempSkill("")
         setJob((prev) => ({
                 ...prev,
                 tags: [...job.tags, tempSkill]
@@ -42,6 +43,10 @@ export const CreateJobPopup = () => {
         }
         setTempSkill(event.target.value)
         return
+    }
+
+    const handleDeleteTag = () => {
+
     }
 
     const handleSubmit = async (event) => {
@@ -55,7 +60,7 @@ export const CreateJobPopup = () => {
         }, 
         comments: [], 
         likes: [], 
-        location: "Котакбасия", 
+        location: "Казахстан", 
         views: 0
       })
 
@@ -63,6 +68,7 @@ export const CreateJobPopup = () => {
         console.log(response);
       }
     }
+
 return (
   <div className="post-popup job_post">
     <div className="post-project">
@@ -71,25 +77,25 @@ return (
             <form onSubmit={handleSubmit}>
                 <div className="row">
                     <div className="col-lg-12">
-                        <input onChange={handleChange} type="text" name="title" placeholder="Title" />
+                        <input required onChange={handleChange} type="text" name="title" placeholder="Title" />
                     </div>
                     <div className="col-lg-12">
                         <div className="inp-field">
-                            <select name='category' onChange={handleChange}>
-                                <option value="Ебень">Разработчик</option>
-                                <option value="Конч">СММ</option>
-                                <option value="Далб">Дворник</option>
-                                <option value="Котакпаш">Горничная</option>
+                            <select required name='category' onChange={handleChange}>
+                                <option value="Разработчик">Разработчик</option>
+                                <option value="СММ">СММ</option>
+                                <option value="Дворник">Дворник</option>
+                                <option value="Горничная">Горничная</option>
                             </select>
                         </div>
                     </div>
                     <div className="col-lg-12">
-                        <input value={tempSkill} type="text" name="skills" placeholder="Skills" onKeyDown={handleChangeSkills} onChange={handleChangeSkills} />
+                        <input required value={tempSkill} type="text" name="skills" placeholder="Skills" onKeyDown={handleChangeTag} onChange={handleChangeTag} />
                         {Array.isArray(job.tags) && job.tags.length > 0 && (
                         <ul className="skill-tags">
                             {job.tags.map((tag) => (
                                 <li>
-                                <span style={styles.tag}>{tag}</span>
+                                  <span style={styles.tag}>{tag}</span>
                                 </li>
                             ))}
                         </ul>
@@ -97,20 +103,20 @@ return (
                     </div>
                     <div className="col-lg-6">
                         <div className="price-br">
-                            <input onChange={handleChange} type="text" name="rate" placeholder="Price" />
+                            <input required onChange={handleChange} type="text" name="rate" placeholder="Price" />
                             <i className="la la-dollar"></i>
                         </div>
                     </div>
                     <div className="col-lg-6">
                         <div className="inp-field">
-                            <select onChange={handleChange} name="jobType">
+                            <select required onChange={handleChange} name="jobType">
                                 <option value="Full Time">Full Time</option>
                                 <option value="Half Time">Half time</option>
                             </select>
                         </div>
                     </div>
                     <div className="col-lg-12">
-                        <textarea onChange={handleChange} name="description" placeholder="Description"></textarea>
+                        <textarea required onChange={handleChange} name="description" placeholder="Description"></textarea>
                     </div>
                     <div className="col-lg-12">
                         <ul>
