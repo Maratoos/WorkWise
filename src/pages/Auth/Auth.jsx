@@ -15,8 +15,16 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const Auth = () => {
-  const [showForm, setSowForm] = useState(true)
+  const [showLogin, setShowLogin] = useState(true)
   const classes = useStyles()
+
+  const AuthTagsController = () => (
+    <ul className="sign-control">
+      <li onClick={() => setShowLogin(true)} className={showLogin ? "current" : ""}><a href="#">Sign in</a></li>				
+      <li onClick={() => setShowLogin(false)} className={!showLogin ? "current" : ""}><a href="#">Sign up</a></li>				
+    </ul>
+  )
+
   return (
     <Box className={classes.root}>
     <Box className="sign-in-page">
@@ -27,13 +35,14 @@ export const Auth = () => {
 							<Box className="cmp-info">
 								<Box className="cm-logo">
 									<img src={cmLogo} alt="" />
-									<p>Workwise,  is a global freelancing platform and social networking where businesses and independent professionals connect and collaborate remotely</p>
+									<p>Workwise, is a global freelancing platform and social networking where businesses and independent professionals connect and collaborate remotely</p>
 								</Box>
 								<img src={cmMain} alt="" />			
 							</Box>
 						</Box>
             <Box className="col-lg-6">
-              {!showForm ? <Login /> : <SignUp />}
+            {showLogin && (<Login><AuthTagsController /></Login>)}
+            {!showLogin && (<SignUp><AuthTagsController /></SignUp>)}
             </Box>
           </Box>
         </Box>

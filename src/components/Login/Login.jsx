@@ -1,22 +1,30 @@
-import React from 'react'
-import { Box } from '@mui/material'
+import React, { useState } from 'react'
+import { Box, Typography } from '@mui/material'
 
-export const Login = () => {
-  return (
+export const Login = ({ children }) => {
+	const [username, setUsername] = useState("")
+	const [password, setPassword] = useState("")
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+	}
+
+return (
 <Box className="login-sec">
+  {children && children}
 	<Box className="sign_in_sec current">
-		<h3>Sign in</h3>
-		<form>
+		<Typography variant="h3">Sign in</Typography>
+		<form onSubmit={handleSubmit}>
 			<Box className="row">
 				<Box className="col-lg-12 no-pdd">
 					<Box className="sn-field">
-						<input type="text" name="username" placeholder="Username" />
+						<input onChange={(e) => setUsername(e.target.value)} value={username} type="text" name="username" placeholder="Username" />
 						<i className="la la-user"></i>
 					</Box>
 				</Box>
 				<Box className="col-lg-12 no-pdd">
 					<Box className="sn-field">
-						<input type="password" name="password" placeholder="Password" />
+						<input onChange={(e) => setPassword(e.target.value)} value={password} type="password" name="password" placeholder="Password" />
 						<i className="la la-lock"></i>
 					</Box>
 				</Box>
@@ -24,7 +32,7 @@ export const Login = () => {
 					<Box className="checky-sec">
 						<Box className="fgt-sec">
 							<input type="checkbox" name="cc" id="c1" />
-							<label for="c1">
+							<label htmlFor="c1">
 								<span></span>
 							</label>
 							<small>Remember me</small>
