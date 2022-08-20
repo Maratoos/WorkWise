@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { Login } from '../../components/Login/Login'
 import cmLogo from '@/assets/images/cm-logo.png'
 import copyIcon from '@/assets/images/copy-icon.png'
@@ -14,9 +15,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export const Auth = () => {
+export const Auth = ({ user }) => {
   const [showLogin, setShowLogin] = useState(true)
   const classes = useStyles()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(user) {
+      navigate(-1)
+    }
+  }, [user])
 
   const AuthTagsController = () => (
     <ul className="sign-control">
