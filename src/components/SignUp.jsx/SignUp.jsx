@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { useSignup } from '../../hooks/useSignup'
 
 export const SignUp = ({ children }) => {
-  const { signup } = useSignup()
+  const { signup, error } = useSignup("users")
+	const navigate = useNavigate()
   const [form, setForm] = useState({
+    email: "",
     username: "",
     category: "",
     country: "", 
@@ -23,26 +26,28 @@ export const SignUp = ({ children }) => {
     if(!confirmed) return
 
     await signup(form)
+
+    if(!error) return navigate("/")
+    console.log(error)
   }
   return (
   <Box className="login-sec">
     {children && children}
     <Box className="sign_in_sec current">
-      <Box className="signup-tab">
-        <i className="fa fa-long-arrow-left"></i>
-        <h2>johndoe@example.com</h2>
-        <ul>
-          <li className="current"><a href="#" title="">User</a></li>
-          <li><a href="#" title="">Company</a></li>
-        </ul>
-      </Box> 
+		<Typography variant="h3">Sign up</Typography>
       <Box className="dff-tab current">
         <form onSubmit={handleSubmit}>
           <Box className="row">
             <Box className="col-lg-12 no-pdd">
               <Box className="sn-field">
-                <input onChange={handleChange} type="text" name="username" placeholder="Full Name" />
+                <input onChange={handleChange} type="text" name="username" placeholder="Username" />
                 <i className="la la-user"></i>
+              </Box>
+            </Box>
+            <Box className="col-lg-12 no-pdd">
+              <Box className="sn-field">
+                <input onChange={handleChange} type="email" name="email" placeholder="Email" />
+                <i className="fa"><img style={{width: "20px"}} src="https://illustoon.com/photo/thum/2755.png" alt="" /></i>
               </Box>
             </Box>
             <Box className="col-lg-12 no-pdd">
@@ -93,50 +98,6 @@ export const SignUp = ({ children }) => {
           </Box>
         </form>
       </Box> 
-      {/* <Box className="dff-tab" id="tab-4">
-        <form>
-          <Box className="row">
-            <Box className="col-lg-12 no-pdd">
-              <Box className="sn-field">
-                <input onChange={handleChange} type="text" name="company-name" placeholder="Company Name" />
-                <i className="la la-building"></i>
-              </Box>
-            </Box>
-            <Box className="col-lg-12 no-pdd">
-              <Box className="sn-field">
-                <input onChange={handleChange} type="text" name="country" placeholder="Country" />
-                <i className="la la-globe"></i>
-              </Box>
-            </Box>
-            <Box className="col-lg-12 no-pdd">
-              <Box className="sn-field">
-                <input onChange={handleChange} type="password" name="password" placeholder="Password" />
-                <i className="la la-lock"></i>
-              </Box>
-            </Box>
-            <Box className="col-lg-12 no-pdd">
-              <Box className="sn-field">
-                <input onChange={handleChange} type="password" name="confirmPassword" placeholder="Repeat Password" />
-                <i className="la la-lock"></i>
-              </Box>
-            </Box>
-            <Box className="col-lg-12 no-pdd">
-              <Box className="checky-sec st2">
-                <Box className="fgt-sec">
-                  <input type="checkbox" name="cc" id="c3" />
-                  <label htmlFor="c3">
-                    <span></span>
-                  </label>
-                  <small>Yes, I understand and agree to the workwise Terms & Conditions.</small>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="col-lg-12 no-pdd">
-              <button type="submit" value="submit">Get Started</button>
-            </Box>
-          </Box>
-        </form>
-      </Box>  */}
     </Box>		
   </Box>
   )
