@@ -8,12 +8,12 @@ export const useSignup = () => {
     const [error, setError] = useState(null)
     const [isPending, setIsPending] = useState(false)
 
-    const signup = async ({ username, password, name, file }) => {
+    const signup = async ({ email, password, username, file }) => {
         setError(null)
         setIsPending(true)
 
         try {
-        const response = await createUserWithEmailAndPassword(auth, username + "@workwise.com", password)
+        const response = await createUserWithEmailAndPassword(auth, email, password) 
 
         // const uploadPath = `avatars/${response.user.uid}/${file.name}`
         // const imgRef = ref(storage, uploadPath)
@@ -25,11 +25,11 @@ export const useSignup = () => {
             isOnline:true,
             displayName: username,
             photoURL: "https://i1.sndcdn.com/artworks-DfDLRYUqkm9IDWcy-AYXT0w-t500x500.jpg",
-            email: username + "@workwise.com"
+            email: email
         })
 
         await updateProfile(response.user, {
-            displayName: name,
+            displayName: username,
             photoURL: "https://i1.sndcdn.com/artworks-DfDLRYUqkm9IDWcy-AYXT0w-t500x500.jpg"
         }) 
 
