@@ -2,11 +2,11 @@ import { Box } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
-import { Login } from '../../components/Login/Login'
+import { Login } from '../../components/Auth/Login/Login'
 import cmLogo from '@/assets/images/cm-logo.png'
 import copyIcon from '@/assets/images/copy-icon.png'
 import cmMain from '@/assets/images/cm-main-img.png'
-import { SignUp } from '../../components/SignUp.jsx/SignUp'
+import { SignUp } from '../../components/Auth/SignUp/SignUp'
 
 const useStyles = makeStyles((theme) => ({
   root: {

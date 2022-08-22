@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { useSignup } from '../../hooks/useSignup'
+import { useSignup } from '../../../hooks/useSignup'
 
 export const SignUp = ({ children }) => {
   const { signup, error } = useSignup("users")
@@ -21,8 +21,8 @@ export const SignUp = ({ children }) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }))
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async (event) => {
+    event.preventDefault()
     if(!confirmed) return
 
     await signup(form)
