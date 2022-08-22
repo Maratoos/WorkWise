@@ -1,22 +1,31 @@
 import React, { useState } from 'react'
 import { Box, Typography } from '@mui/material'
-import { useLogin } from '../../hooks/useLogin'
+import { useLogin } from '../../../hooks/useLogin'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setUserAction } from '../store/actions'
 
 export const Login = ({ children }) => {
+	const dispatch = useDispatch()
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const { login, error } = useLogin()
 	const navigate = useNavigate()
 
-	const handleSubmit = async (e) => {
-		e.preventDefault()
+	const handleSubmit = async (event) => { 
+		event.preventDefault()
 
-		await login(email, password)
+		const user = await login(email, password)
 
-		if(!error) return navigate("/")
+		console.log(user)
+
+		if(!error) {
+			dispatch(setUserAction(user))
+			return navigate("/")
+		}
 		console.log(error)
 	}
+
 
 return (
 <Box className="login-sec">
