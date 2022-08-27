@@ -1,4 +1,4 @@
-import { addDoc, doc, collection, onSnapshot } from "firebase/firestore";
+import { addDoc, doc, collection, onSnapshot, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { firestore } from "../firebase/config";
 
@@ -32,6 +32,16 @@ export const addDocument = async (collectionName, newDoc) => {
 
     try {
         return await addDoc(collectionRef, newDoc)
+    } catch (err) {
+        return err.message
+    }
+}
+
+export const getDocument = async (collectionName, id) => {
+    const collectionRef = doc(firestore, collectionName, id)
+
+    try {
+        return await getDoc(collectionRef)
     } catch (err) {
         return err.message
     }

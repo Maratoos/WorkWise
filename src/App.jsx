@@ -6,18 +6,22 @@ import { Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase/config'
-import { setUserAction } from './components/Auth/store/actions'
+import { setUserAction, setUserLoadingAction } from './components/Auth/store/actions'
 import { useDispatch } from 'react-redux'
+import { getDocument } from './hooks/useDocument'
 
 function App() {
   const [user, setUser] = useState()
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (_user) => {
+    const unsub = onAuthStateChanged(auth, async (_user) => {
       if(_user) {
-        setUser(_user)
-        dispatch(setUserAction(_user))
+        dispatch(setUserLoadingAction(true))
+        const res = await getDocument("users", _user.uid)
+        setUser({ ..._user, ...res.data() })
+        dispatch(setUserAction({ ..._user, ...res.data() }))
+        dispatch(setUserLoadingAction(false))
       }
     })
 
