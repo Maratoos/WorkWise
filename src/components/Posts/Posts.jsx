@@ -3,12 +3,18 @@ import clock from '@/assets/images/clock.png'
 import icon8 from '@/assets/images/icon8.png'
 import icon9 from '@/assets/images/icon9.png'
 import likedImg from '@/assets/images/liked-img.png'
+import { useSelector } from "react-redux"
 import { getCollection } from '../../hooks/getCollection'
+import { Box, CircularProgress } from '@mui/material'
 
 export const Posts = () => {
   const { documents:posts, error } = getCollection('posts')
+  const { isLoading } = useSelector(state => state.authReducer)
   return (
   <div className="posts-section">
+    {isLoading && <Box py={4} display="flex" alignItems="center" justifyContent="center">
+        <CircularProgress />
+    </Box>}
     {posts.length > 0 && posts.map((post) => (
     <div className="post-bar"  key={post.id}>
       <div className="post_topbar">
