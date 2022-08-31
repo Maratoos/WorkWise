@@ -2,7 +2,7 @@ import './App.css'
 import { Header } from './components/Header/Header'
 import { Auth } from './pages/Auth/Auth'
 import { Home } from './pages/Home/Home'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase/config'
@@ -13,6 +13,7 @@ import { getDocument } from './hooks/useDocument'
 function App() {
   const [user, setUser] = useState()
   const dispatch = useDispatch()
+  const location = useLocation()
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (_user) => {
@@ -32,7 +33,7 @@ function App() {
   return (
     <div className="App">
       <div className="wrapper">
-        {user && <Header />}
+        {location.pathname !== "/auth" && <Header />}
         <Routes>
           <Route path='/' element={<Home />}/>
           <Route path='/auth' element={<Auth user={user} />}/>
