@@ -1,9 +1,11 @@
 import React from 'react'
+import { useSelector } from "react-redux"
 import logoImg from '@/assets/images/logo.png'
 import { UserAccount } from './UserAccount/UserAccount'
 import { Nav } from './Nav/Nav'
 
 export const Header = () => {
+  const { user } = useSelector(({ authReducer }) => authReducer)
   return (
     <header>
     <div className="container">
@@ -17,11 +19,11 @@ export const Header = () => {
                     <button type="submit"><i className="la la-search"></i></button>
                 </form>
             </div>
-            <Nav />
+            <Nav user={user} />
             <div className="menu-btn">
                 <a href="#" title=""><i className="fa fa-bars"></i></a>
             </div>
-            <UserAccount />
+            {user && <UserAccount />}
         </div>
     </div>
 </header>
