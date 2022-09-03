@@ -1,10 +1,9 @@
 import React from 'react'
 import { useSelector } from "react-redux"
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import { Suggestions } from '../Widgets/Suggestions/Suggestions';
 import logo2Img from '../../assets/images/logo2.png'
 import cpImg from '../../assets/images/cp.png'
+import { UserProfileSkeleton } from './UserProfileSkeleton';
 
 export const UserProfileSidebar = () => {
     const { user, isLoading } = useSelector(state => state.authReducer)
@@ -15,7 +14,7 @@ return (
             <div className="user-profile">
                 <div className="username-dt">
                     <div className="usr-pic">
-                        <img src={user.photoURL} alt="" />
+                        <img width={110} height={110} src={user.photoURL} alt="" />
                     </div>
                 </div>
                 <div className="user-specs">
@@ -37,10 +36,9 @@ return (
                 </li>
             </ul>
         </div>}
-        {isLoading &&
-        <Box py={4} display="flex" alignItems="center" justifyContent="center">
-            <CircularProgress />
-        </Box>}
+        {isLoading && (
+            <UserProfileSkeleton />
+        )}
         <Suggestions />
         <div className="tags-sec full-width">
             <ul>

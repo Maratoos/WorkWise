@@ -9,6 +9,7 @@ import { auth } from './firebase/config'
 import { setUserAction, setUserLoadingAction } from './components/Auth/store/actions'
 import { useDispatch } from 'react-redux'
 import { getDocument } from './hooks/useDocument'
+import { MyProfileFeed } from './pages/MyProfileFeed/MyProfileFeed'
 
 function App() {
   const [user, setUser] = useState()
@@ -37,6 +38,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />}/>
           <Route path='/auth' element={<Auth user={user} />}/>
+          <Route path='/my-profile-feed' element={<MyProfileFeed/>}/>
         </Routes>
       </div>
     </div>
