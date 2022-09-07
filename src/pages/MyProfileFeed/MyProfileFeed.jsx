@@ -1,6 +1,5 @@
 import React, { useState }  from 'react'
 import coverImg from '../../assets/images/resources/cover-img.jpg'
-import userPro from '../../assets/images/resources/user-pro-img.png'
 import s1Png from '../../assets/images/resources/s1.png'
 import s2Png from '../../assets/images/resources/s2.png'
 import s3Png from '../../assets/images/resources/s3.png'
@@ -9,60 +8,117 @@ import s5Png from '../../assets/images/resources/s5.png'
 import s6Png from '../../assets/images/resources/s6.png'
 import { useStorage } from '../../hooks/useStorage'
 import { useSelector } from 'react-redux'
+import { Box, CircularProgress } from '@mui/material'
 
 export const MyProfileFeed = () => {
     const { user } = useSelector(({ authReducer }) => authReducer)
     const [fileUrl, setFileUrl] = useState()
-	const [bgFileUrl, setBgFileUrl] = useState()
+	const [coverFileUrl, setCoverFileUrl] = useState(coverImg)
+	const [coverisLoading, setCoverIsLoading] = useState(false)
+	const [avatarisLoading, setAvatarIsLoading] = useState(false)
     const { updateProfileImage, updateProfileBackgroundImage } = useStorage()
+
+	const imageTypes = ["jpeg", "jpg", "png"]
 
     const handleChangeImage = async (e) => {
         const file = e.target.files[0]
-		if(user && file) {
+		setAvatarIsLoading(true)
+		if(user && file && file.type.includes(imageTypes)) {
 			const res = await updateProfileImage(file)
 			setFileUrl(res)
 		}
+		setAvatarIsLoading(false)
     }
 
 	const handleChangeBgImage = async (e) => {
         const file = e.target.files[0]
+		setCoverIsLoading(true)
 		if(user && file) {
 			const res = await updateProfileBackgroundImage(file)
-			setBgFileUrl(res)
+			setCoverFileUrl(res)
 		}
+		setCoverIsLoading(false)
     }
 
   return (
     <div>
         <section className="cover-sec">
-			<img width={1367} height={342} src={bgFileUrl ?? user?.profileBg} alt="" />
+			<Box 
+			component="img" 
+			sx={{
+				objectFit: "cover", 
+				objectPosition:"100% 30%",
+			}} 
+			width={1367} 
+			height={400} 
+			src={user?.profileBg ?? coverFileUrl} 
+			alt="" 
+			/>
+			{coverisLoading && 
+			<>
+			<CircularProgress
+			size={80}
+			sx={{
+			  position: "absolute",
+			  zIndex: 2,
+			  left: "46%",
+			  top: "40%",
+			  transform: "translate(-50%, -50%)"
+			}}
+			/>
+			<Box 
+			component="span"
+			height="100%"
+			width="100%"
+			sx={{
+			  position: "absolute",
+			  left: 0, 
+			  top: 0, 
+			  background: "rgba(0,0,0,0.7)"
+			}}
+			/>
+			</>
+			}
 			<div className="add-pic-box">
 				<div className="container">
 					<div className="row no-gutters">
 						<div className="col-lg-12 col-sm-12">					
-							<input onChange={handleChangeBgImage} type="file" id="bg-image" />
+							<input disabled={coverisLoading} onChange={handleChangeBgImage} type="file" id="bg-image" />
 							<label htmlFor="bg-image">Change Image</label>				
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-        <div className="main-section">
+      <main>
+		<div className="main-section">
             <div className="container">
                 <div className="main-section-data">
                     <div className="row">
                         <div className="col-lg-3">
 							<div className="main-left-sidebar">
-								<div className="user_profile">
-									<div className="user-pro-img">
+								<Box className="user_profile">
+									<Box  className="user-pro-img">
                                         <label htmlFor="profile-image">
-										<img width={180} height={180} src={fileUrl ?? user?.photoURL} alt="" />
+										<Box 
+										component="img" 
+										sx={{
+										  height: "calc(180 / 1440 * 100vw)", 
+										  width: "calc(180 / 1440 * 100vw)", 
+										  maxWidth: 180, 
+										  maxHeight: 180, 
+										  minHeight: 140, 
+										  minWidth: 140
+										}}
+										src={fileUrl ?? user?.photoURL} 
+										alt="" 
+										/>
                                         </label>
 										<div className="add-dp" id="OpenImgUpload">
-											<input type="file" id="profile-image" onChange={handleChangeImage}/>
+											<input disabled={avatarisLoading} type="file" id="profile-image" onChange={handleChangeImage}/>
 											<label htmlFor="profile-image"><i className="fa fa-camera"></i></label>												
 										</div>
-									</div>
+									</Box>
 									<div className="user_pro_status">
 										<ul className="flw-status">
 											<li>
@@ -85,7 +141,7 @@ export const MyProfileFeed = () => {
 										<li><a href="#" title=""><i className="fa fa-instagram"></i> Http://www.instagram.com/john...</a></li>
 										<li><a href="#" title=""><i className="fa fa-youtube"></i> Http://www.youtube.com/john...</a></li>
 									</ul>
-								</div>
+								</Box>
 								<div className="suggestions full-width">
 									<div className="sd-title">
 										<h3>People Viewed Profile</h3>
@@ -151,6 +207,7 @@ export const MyProfileFeed = () => {
                 </div>
             </div>
         </div>
+	  </main>
     </div>
   )
 }
