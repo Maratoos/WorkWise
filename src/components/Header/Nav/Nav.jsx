@@ -6,6 +6,7 @@ import icon4 from '@/assets/images/icon4.png'
 import icon5 from '@/assets/images/icon5.png'
 import { Notifications } from './Notifications'
 import { Messages } from './Messages'
+import { Link } from 'react-router-dom'
 
 export const Nav = ({ user }) => {
   return (
@@ -41,7 +42,7 @@ export const Nav = ({ user }) => {
          </a>
          <ul>
              <li><a href="user-profile.html" title="">User Profile</a></li>
-             <li><a href="my-profile-feed.html" title="">my-profile-feed</a></li>
+             <li><Link to="/my-profile-feed" title="">my-profile-feed</Link></li>
          </ul>
      </li>
         )}

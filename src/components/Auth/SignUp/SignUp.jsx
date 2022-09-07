@@ -18,7 +18,7 @@ export const SignUp = ({ children }) => {
   const [confirmed, setConfirmed] = useState(false)
 
   const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }))
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   const handleSubmit = async (event) => {
@@ -102,3 +102,5 @@ export const SignUp = ({ children }) => {
   </Box>
   )
 }
+
+//followers following role
