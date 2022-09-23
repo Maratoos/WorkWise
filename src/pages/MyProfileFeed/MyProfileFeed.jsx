@@ -9,21 +9,20 @@ import s6Png from '../../assets/images/resources/s6.png'
 import { useStorage } from '../../hooks/useStorage'
 import { useSelector } from 'react-redux'
 import { Box, CircularProgress } from '@mui/material'
+import { Tabs } from './Tabs'
 
 export const MyProfileFeed = () => {
     const { user } = useSelector(({ authReducer }) => authReducer)
     const [fileUrl, setFileUrl] = useState()
-	const [coverFileUrl, setCoverFileUrl] = useState(coverImg)
+	const [coverFileUrl, setCoverFileUrl] = useState()
 	const [coverisLoading, setCoverIsLoading] = useState(false)
 	const [avatarisLoading, setAvatarIsLoading] = useState(false)
     const { updateProfileImage, updateProfileBackgroundImage } = useStorage()
 
-	const imageTypes = ["jpeg", "jpg", "png"]
-
     const handleChangeImage = async (e) => {
         const file = e.target.files[0]
 		setAvatarIsLoading(true)
-		if(user && file && file.type.includes(imageTypes)) {
+		if(user && file) {
 			const res = await updateProfileImage(file)
 			setFileUrl(res)
 		}
@@ -40,18 +39,16 @@ export const MyProfileFeed = () => {
 		setCoverIsLoading(false)
     }
 
+
+
   return (
     <div>
         <section className="cover-sec">
 			<Box 
 			component="img" 
-			sx={{
-				objectFit: "cover", 
-				objectPosition:"100% 30%",
-			}} 
 			width={1367} 
 			height={400} 
-			src={user?.profileBg ?? coverFileUrl} 
+			src={coverFileUrl ?? user?.profileBg} 
 			alt="" 
 			/>
 			{coverisLoading && 
@@ -113,6 +110,7 @@ export const MyProfileFeed = () => {
 										src={fileUrl ?? user?.photoURL} 
 										alt="" 
 										/>
+										{avatarisLoading && "Ваше фото грузится"}
                                         </label>
 										<div className="add-dp" id="OpenImgUpload">
 											<input disabled={avatarisLoading} type="file" id="profile-image" onChange={handleChangeImage}/>
@@ -132,14 +130,14 @@ export const MyProfileFeed = () => {
 										</ul>
 									</div>
 									<ul className="social_links">
-										<li><a href="#" title=""><i className="la la-globe"></i> www.example.com</a></li>
-										<li><a href="#" title=""><i className="fa fa-facebook-square"></i> Http://www.facebook.com/john...</a></li>
-										<li><a href="#" title=""><i className="fa fa-twitter"></i> Http://www.Twitter.com/john...</a></li>
-										<li><a href="#" title=""><i className="fa fa-google-plus-square"></i> Http://www.googleplus.com/john...</a></li>
-										<li><a href="#" title=""><i className="fa fa-behance-square"></i> Http://www.behance.com/john...</a></li>
-										<li><a href="#" title=""><i className="fa fa-pinterest"></i> Http://www.pinterest.com/john...</a></li>
-										<li><a href="#" title=""><i className="fa fa-instagram"></i> Http://www.instagram.com/john...</a></li>
-										<li><a href="#" title=""><i className="fa fa-youtube"></i> Http://www.youtube.com/john...</a></li>
+										<li><a href="#"><i className="la la-globe"></i> www.example.com</a></li>
+										<li><a href="#"><i className="fa fa-facebook-square"></i> Http://www.facebook.com/john...</a></li>
+										<li><a href="#"><i className="fa fa-twitter"></i> Http://www.Twitter.com/john...</a></li>
+										<li><a href="#"><i className="fa fa-google-plus-square"></i> Http://www.googleplus.com/john...</a></li>
+										<li><a href="#"><i className="fa fa-behance-square"></i> Http://www.behance.com/john...</a></li>
+										<li><a href="#"><i className="fa fa-pinterest"></i> Http://www.pinterest.com/john...</a></li>
+										<li><a href="#"><i className="fa fa-instagram"></i> Http://www.instagram.com/john...</a></li>
+										<li><a href="#"><i className="fa fa-youtube"></i> Http://www.youtube.com/john...</a></li>
 									</ul>
 								</Box>
 								<div className="suggestions full-width">
@@ -201,6 +199,11 @@ export const MyProfileFeed = () => {
 										</div>
 									</div>
 								</div>
+							</div>
+						</div>
+						<div className="col-lg-6">
+							<div className="main-ws-sec">
+								<Tabs />
 							</div>
 						</div>
                     </div>

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import logoImg from '@/assets/images/logo.png'
 import { UserAccount } from './UserAccount/UserAccount'
 import { Nav } from './Nav/Nav'
+import { Link } from 'react-router-dom'
 
 export const Header = () => {
   const { user } = useSelector(({ authReducer }) => authReducer)
@@ -11,7 +12,7 @@ export const Header = () => {
     <div className="container">
         <div className="header-data">
             <div className="logo">
-                <a href="index.html" title=""><img src={logoImg} alt="" /></a>
+                <Link to="/"><img src={logoImg} alt="" /></Link>
             </div>
             <div className="search-bar">
                 <form>
