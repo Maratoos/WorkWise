@@ -1,5 +1,4 @@
 import { Box } from '@mui/material'
-import { makeStyles } from '@mui/styles'
 import { useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import { Login } from '../../components/Auth/Login/Login'
@@ -8,16 +7,8 @@ import copyIcon from '@/assets/images/copy-icon.png'
 import cmMain from '@/assets/images/cm-main-img.png'
 import { SignUp } from '../../components/Auth/SignUp/SignUp'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    background: theme.palette.secondary.main,
-    height: "100vh" 
-  }
-}))
-
 export const Auth = ({ user }) => {
   const [showLogin, setShowLogin] = useState(true)
-  const classes = useStyles()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -34,7 +25,7 @@ export const Auth = ({ user }) => {
   )
 
   return (
-    <Box className={classes.root}>
+    <Box style={{height: "100vh", background: '#e75348'}}>
     <Box className="sign-in-page">
 			<Box className="signin-popup">
 				<Box className="signin-pop">
@@ -68,7 +59,7 @@ export const Auth = ({ user }) => {
 						<li><a href="#" title="">Language</a></li>
 						<li><a href="#" title="">Copyright Policy</a></li>
 					</ul>
-					<p><img src={copyIcon} alt="" />Copyright 2019</p>
+					<p><img src={copyIcon} alt="" />Copyright 2022</p>
 				</Box>
 			</Box>
     </Box>    

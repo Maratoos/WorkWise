@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (_user) => {
-      if(_user) {
+      if (_user) {
         dispatch(setUserLoadingAction(true))
         const res = await getDocument("users", _user.uid)
         setUser({ ..._user, ...res.data() })
@@ -36,9 +36,9 @@ function App() {
       <div className="wrapper">
         {location.pathname !== "/auth" && <Header />}
         <Routes>
-          <Route path='/' element={<Home />}/>
-          <Route path='/auth' element={<Auth user={user} />}/>
-          <Route path='/my-profile-feed' element={<MyProfileFeed/>}/>
+          <Route path='/' element={<Home />} />
+          <Route path='/auth' element={<Auth user={user} />} />
+          <Route path='/my-profile-feed' element={<MyProfileFeed />} />
         </Routes>
       </div>
     </div>

@@ -10,12 +10,12 @@ export const getCollection = (collectionName) => {
 
     const getDocuments = async () => {
         try {
-            const response = await  getDocs(collectionRef)
-            setDocuments(response.docs.map((doc) => ({...doc.data(), id: doc.id})))
+            const response = await getDocs(collectionRef)
+            setDocuments(response.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
         } catch (err) {
             setError(err.message)
-        } 
-    } 
+        }
+    }
     useEffect(() => {
         getDocuments()
     }, [])
