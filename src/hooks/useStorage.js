@@ -6,8 +6,8 @@ import { doc, setDoc } from "firebase/firestore"
 export const useStorage = () => {
     const user = auth.currentUser
     const updateProfileImage = async (file) => {
-        try{
-            const filePath = `users/${user.uid}/images/avatars/${file.name}`
+        try {
+            const filePath = `users/${user.uid}/avatars/${file.name}`
             const fileRef = await uploadBytesResumable(ref(storage, filePath), file)
             const fileUrl = await getDownloadURL(fileRef.ref)
 
@@ -24,20 +24,17 @@ export const useStorage = () => {
             })
 
             return fileUrl
-        } catch(err) {
+        } catch (err) {
             error = err.message
             throw new Error(err.message)
         }
     }
+
     const updateProfileBackgroundImage = async (file) => {
-        try{
-            const filePath = `users/${user.uid}/images/profilebg/${file.name}`
+        try {
+            const filePath = `users/${user.uid}/profilebg/${file.name}`
             const fileRef = await uploadBytesResumable(ref(storage, filePath), file)
             const fileUrl = await getDownloadURL(fileRef.ref)
-
-            await updateProfile(user, {
-                profileBg: fileUrl
-            })
 
             const docRef = doc(firestore, "users", user.uid)
 
@@ -48,11 +45,32 @@ export const useStorage = () => {
             })
 
             return fileUrl
-        } catch(err) {
+        } catch (err) {
             error = err.message
             throw new Error(err.message)
         }
     }
 
-    return { updateProfileImage, updateProfileBackgroundImage }
+    const updatePortfolio = async (file, portfolio = []) => {
+        try {
+            const filePath = `users/${user.uid}/portfolio/${file.name}`
+            const fileRef = await uploadBytesResumable(ref(storage, filePath), file)
+            const fileUrl = await getDownloadURL(fileRef.ref)
+
+            const docRef = doc(firestore, "users", user.uid)
+
+            await setDoc(docRef, {
+                portfolio: [...portfolio, fileUrl]
+            }, {
+                merge: true
+            })
+
+            return fileUrl
+        } catch (err) {
+            error = err.message
+            throw new Error(err.message)
+        }
+    }
+
+    return { updateProfileImage, updateProfileBackgroundImage, updatePortfolio }
 } 

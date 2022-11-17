@@ -44,36 +44,36 @@ const dataTabItems = [
 const feedTabItems = [<Posts />, <Info />, "Jobs", "Reviews", "Bids", <Portfolio />, "Payment"]
 
 export const Tabs = () => {
-  const [activeTab, setActiveTab] = useState(0)
-  return (
-<div>
-  <div className="user-tab-sec rewivew">
-    <h3>John Doe</h3>
-    <div className="star-descp">
-        <span>Graphic Designer at Self Employed</span>
-        <ul>
-            <li><i className="fa fa-star"></i></li>
-            <li><i className="fa fa-star"></i></li>
-            <li><i className="fa fa-star"></i></li>
-            <li><i className="fa fa-star"></i></li>
-            <li><i className="fa fa-star-half-o"></i></li>
-        </ul>
-        <a href="#" title="">Status</a>
-    </div>
-        <div className="tab-feed st2 settingjb">
-        <ul>
-            {dataTabItems.map((item, index) => (
-                <li onClick={() => setActiveTab(index)} key={item.text} style={{cursor: 'pointer'}} className={index === activeTab ? "active" : ""} >
-                    <a>
-                      <img src={item.src} alt="" />
-                      <span>{item.text}</span>
-                    </a>
-                </li>
-            ))}
-        </ul>
-    </div>
-  </div>
-  {feedTabItems[activeTab]}                                                     
-</div>
-  )
+    const [activeTab, setActiveTab] = useState(0)
+    return (
+        <div>
+            <div className="user-tab-sec rewivew">
+                <h3>John Doe</h3>
+                <div className="star-descp">
+                    <span>Graphic Designer at Self Employed</span>
+                    <ul>
+                        <li><i className="fa fa-star"></i></li>
+                        <li><i className="fa fa-star"></i></li>
+                        <li><i className="fa fa-star"></i></li>
+                        <li><i className="fa fa-star"></i></li>
+                        <li><i className="fa fa-star-half-o"></i></li>
+                    </ul>
+                    <a href="#" title="">Status</a>
+                </div>
+                <div className="tab-feed st2 settingjb">
+                    <ul>
+                        {dataTabItems.map((item, index) => (
+                            <li onClick={() => setActiveTab(index)} key={item.text} style={{ cursor: 'pointer' }} className={index === activeTab ? "active" : ""} >
+                                <a>
+                                    <img src={item.src} alt="" />
+                                    <span>{item.text}</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            {feedTabItems[activeTab]}
+        </div>
+    )
 }

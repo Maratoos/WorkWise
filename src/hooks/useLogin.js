@@ -6,7 +6,7 @@ import { auth, firestore } from '../firebase/config'
 export const useLogin = () => {
     const [error, setError] = useState(null)
     const [isPending, setIsPending] = useState(false)
-    
+
     const login = async (email, password) => {
         setError(null)
         setIsPending(true)
@@ -15,13 +15,13 @@ export const useLogin = () => {
 
             const usersRef = doc(firestore, "users", user.uid)
 
-            await setDoc(usersRef, {isOnline: true}, {merge: true})
+            await setDoc(usersRef, { isOnline: true }, { merge: true })
 
             setIsPending(false)
             setError(null)
             return user
         }
-         catch(err) {
+        catch (err) {
             setError(err.message)
             setIsPending(false)
         }

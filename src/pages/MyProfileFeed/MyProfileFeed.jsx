@@ -110,8 +110,8 @@ export const MyProfileFeed = () => {
 										src={fileUrl ?? user?.photoURL} 
 										alt="" 
 										/>
-										{avatarisLoading && "Ваше фото грузится"}
                                         </label>
+										{avatarisLoading && "Ваше фото грузится"}
 										<div className="add-dp" id="OpenImgUpload">
 											<input disabled={avatarisLoading} type="file" id="profile-image" onChange={handleChangeImage}/>
 											<label htmlFor="profile-image"><i className="fa fa-camera"></i></label>												

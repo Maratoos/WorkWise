@@ -7,25 +7,22 @@ import { doc, setDoc } from "firebase/firestore"
 export const useLogout = () => {
     const [error, setError] = useState(null)
     const [isPending, setIsPending] = useState(false)
-    const { dispatch, user } = useAuthContext()
 
     const logout = async () => {
         setError(null)
         setIsPending(true)
 
         try {
-        const usersRef = doc(firestore, "users", user.uid)
-        await setDoc(usersRef, {
-            isOnline: false
-        }, {merge: true})
+            const usersRef = doc(firestore, "users", user.uid)
+            await setDoc(usersRef, {
+                isOnline: false
+            }, { merge: true })
 
-        await signOut(auth)
+            await signOut(auth)
 
-        dispatch({type: 'LOGOUT'})
-
-        setIsPending(false)
-        setError(null)
-        } catch(err) {
+            setIsPending(false)
+            setError(null)
+        } catch (err) {
             console.log(err.message)
             setError(err.message)
             setIsPending(false)

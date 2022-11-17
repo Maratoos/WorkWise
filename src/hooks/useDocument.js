@@ -9,20 +9,20 @@ export const getDocumentRealTime = (collectionName, id) => {
     useEffect(() => {
         const docRef = doc(firestore, collectionName, id)
 
-        const unsubscribe = onSnapshot(docRef,  (snap) => {
-            if(snap.data()) {
-                setDocument({...snap.data(), id: snap.id})
+        const unsubscribe = onSnapshot(docRef, (snap) => {
+            if (snap.data()) {
+                setDocument({ ...snap.data(), id: snap.id })
                 setError(null)
             } else {
                 setError("Такого проекта нет!!!")
             }
         }, (err) => {
             setError(err)
-          }
+        }
         )
 
         return () => unsubscribe()
-    },[collectionName, id])
+    }, [collectionName, id])
 
     return { document, error }
 }
